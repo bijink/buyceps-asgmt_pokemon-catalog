@@ -29,9 +29,9 @@
     regenerator-runtime "^0.13.11"
 
 "@bijink/prettier-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@bijink/prettier-config/-/prettier-config-1.0.0.tgz#3affaf96ec428b643725635bb3cdcf9bb1950a3c"
-  integrity sha512-mzGNuCxwam4cQefR+8BWcWTz/jx8AF96YZSlVMLkKhYyFKZN36NWvP6qeD9fWCK5QmPLMi+fKse4hQ3hUerr0Q==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@bijink/prettier-config/-/prettier-config-1.0.1.tgz#937ee620e690ca6b71a7e8a982ba585b50da31ef"
+  integrity sha512-5PgznAAv94Ezfe7UNz/a9D1exCZFsVzsHnxYZlIWvXG7WJp27dN8xPM0ZIiKGt2jB8/8eIZoui73EQJQmTb74Q==
 
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"

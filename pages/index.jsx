@@ -1,17 +1,38 @@
-import { gql } from "@apollo/client";
-import client from "../apolla-client";
+import { gql, useLazyQuery } from "@apollo/client";
+import client from "../apollo-client";
 import { useState } from "react";
 import PokeCard from "@/components/pokeCard";
 
-export default function Home({ data }) {
-  // console.log(data);
+const QUERY_POKEMON_LIST = gql`
+  query GetPokemonList($first: Int!) {
+    pokemons(first: $first) {
+      id
+      number
+      name
+      image
+      types
+    }
+  }
+`;
 
-  const [pokemons, setPokemons] = useState(data?.slice(0, 20));
+export default function Home({ pokemonList }) {
+  const [getPokemonList, { loading, data, error }] = useLazyQuery(QUERY_POKEMON_LIST);
+  // console.log(data, loading, error); // !:log
 
-  const handlePage = lastPokeNumber => {
-    // console.log(Number(lastPokeNumber));
-    let lastPokeNum = Number(lastPokeNumber);
-    setPokemons(data.slice(lastPokeNum, lastPokeNum + 20));
+  const [pokemons, setPokemons] = useState(pokemonList?.slice(0, 20));
+
+  const handlePage = async () => {
+    if (pokemons.length < 20 * 3) {
+      setPokemons(pokemonList.slice(0, pokemons.length + 20));
+    }
+    if (pokemons.length >= 20 * 3) {
+      await getPokemonList({ variables: { first: pokemons.length + 20 } }).then(res => {
+        setPokemons([
+          ...pokemons,
+          ...res?.data?.pokemons?.slice(pokemons.length, pokemons.length + 20),
+        ]);
+      });
+    }
   };
 
   return (
@@ -23,7 +44,23 @@ export default function Home({ data }) {
           ))}
         </div>
       </div>
-      {/* <button onClick={() => handlePage(pokemons[19].number)}>Click</button> */}
+      <div className='flex justify-center mt-[50px] mb-[80px]'>
+        {/* Here, for hidding the load button;
+        Manually using length of total pokemon data available in api.
+        Because total number of data is not included in api response.
+        Not ideal for real applications. */}
+        {pokemons.length < 151 ? (
+          <button
+            className={`btn ${loading ? "btn-blue-loading" : "btn-blue "} `}
+            disabled={loading}
+            onClick={handlePage}
+          >
+            {loading ? "Loading..." : "Load More"}
+          </button>
+        ) : (
+          <p className='text-xl underline underline-offset-2'>End of List</p>
+        )}
+      </div>
     </main>
   );
 }
@@ -31,7 +68,7 @@ export default function Home({ data }) {
 export async function getStaticProps() {
   const { data } = await client.query({
     query: gql`
-      query Pokemons {
+      query GetPokemonList {
         pokemons(first: 60) {
           id
           number
@@ -42,11 +79,10 @@ export async function getStaticProps() {
       }
     `,
   });
-  // console.log(data);
 
   return {
     props: {
-      data: data.pokemons,
+      pokemonList: data.pokemons,
     },
   };
 }
