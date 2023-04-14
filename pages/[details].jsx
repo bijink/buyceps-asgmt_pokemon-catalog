@@ -99,7 +99,7 @@ export default function PokemonDetails({ pokemon }) {
       {/* Evolutions popup modal */}
       {showModal && evolutionsData ? (
         <Modal title='Evolutions' isOpen={showModal} onClose={() => setShowModal(false)}>
-          <div className='flex justify-center items-center mt-3'>
+          <div className='flex flex-col sm:flex-row justify-center items-center mt-3'>
             <EvolutionsPokeCard data={evolutionsData.pokemon} />
             {evolutionsData.pokemon?.evolutions?.map((item, index) => (
               <EvolutionsPokeCard
