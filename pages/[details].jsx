@@ -7,6 +7,7 @@ import ColorTag from "@/components/colorTag";
 import Modal from "@/components/modal";
 import { useState } from "react";
 import EvolutionsPokeCard from "@/components/evolutionsPokeCard";
+import Layout from "@/layout/layout";
 
 const QUERY_POKEMON_EVOLUTIONS = gql`
   query GetPokemonEvolutions($name: String) {
@@ -46,11 +47,11 @@ export default function PokemonDetails({ pokemon }) {
   }
 
   return (
-    <>
-      <div className='container mx-auto text-lg mb-10'>
+    <Layout>
+      <div className='text-lg mb-10'>
         {/* title */}
-        <div className='flex justify-center space-x-5 text-4xl mt-10'>
-          <p className='font-semibold'>{pokemon.name}</p>
+        <div className='flex justify-center space-x-5 text-4xl font-mono mt-5'>
+          <p className='font-semibold text-gray-700'>{pokemon.name}</p>
           <p className='text-gray-600'>&#35;{pokemon.number}</p>
         </div>
         {/* main */}
@@ -111,7 +112,7 @@ export default function PokemonDetails({ pokemon }) {
           </div>
         </Modal>
       ) : null}
-    </>
+    </Layout>
   );
 }
 

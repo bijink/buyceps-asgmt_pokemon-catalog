@@ -2,6 +2,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 import client from "../apollo-client";
 import { useState } from "react";
 import PokeCard from "@/components/pokeCard";
+import Layout from "@/layout/layout";
 
 const QUERY_POKEMON_LIST = gql`
   query GetPokemonList($first: Int!) {
@@ -36,34 +37,36 @@ export default function Home({ pokemonList }) {
   };
 
   return (
-    <main className='container m-auto'>
-      {/* pokemon cards */}
-      <div className='flex justify-center'>
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 p-3'>
-          {pokemons?.map(item => (
-            <PokeCard key={item.id} data={item} />
-          ))}
+    <Layout>
+      <div className=''>
+        {/* pokemon cards */}
+        <div className='flex justify-center'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 p-3'>
+            {pokemons?.map(item => (
+              <PokeCard key={item.id} data={item} />
+            ))}
+          </div>
+        </div>
+        {/* loadmore btn */}
+        <div className='flex justify-center mt-[50px] pb-[20px]'>
+          {/* Here, for hidding the load button;
+              Manually using length of total pokemon data available in api.
+              Because total number of data is not included in api response.
+              Not ideal for real applications. */}
+          {pokemons.length < 151 ? (
+            <button
+              className={`btn ${loading ? "btn-blue-loading" : "btn-blue "} `}
+              disabled={loading}
+              onClick={handlePage}
+            >
+              {loading ? "Loading..." : "Load More"}
+            </button>
+          ) : (
+            <p className='text-xl underline underline-offset-2'>End of List</p>
+          )}
         </div>
       </div>
-      {/* loadmore btn */}
-      <div className='flex justify-center mt-[50px] mb-[80px]'>
-        {/* Here, for hidding the load button;
-        Manually using length of total pokemon data available in api.
-        Because total number of data is not included in api response.
-        Not ideal for real applications. */}
-        {pokemons.length < 151 ? (
-          <button
-            className={`btn ${loading ? "btn-blue-loading" : "btn-blue "} `}
-            disabled={loading}
-            onClick={handlePage}
-          >
-            {loading ? "Loading..." : "Load More"}
-          </button>
-        ) : (
-          <p className='text-xl underline underline-offset-2'>End of List</p>
-        )}
-      </div>
-    </main>
+    </Layout>
   );
 }
 

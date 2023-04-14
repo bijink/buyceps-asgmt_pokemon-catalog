@@ -10,7 +10,7 @@ export default function PokeCard({ data }) {
   };
 
   return (
-    <div className='w-[200px] h-[300px]'>
+    <div className='w-full h-[300px]'>
       {/* image */}
       <div
         className='h-2/3 flex justify-center items-center p-8 bg-white rounded-md cursor-pointer shadow-md transition ease-in-out hover:scale-105 duration-300'
