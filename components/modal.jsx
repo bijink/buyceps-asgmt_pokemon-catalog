@@ -15,13 +15,12 @@ export default function Modal({ isOpen, onClose, title, children }) {
     >
       <div className='bg-gray-500 flex flex-col rounded-md py-4 px-8 border border-gray-800'>
         {/* modal close btn */}
-        <div className='flex justify-between'>
-          <p className='text-2xl'>{title}</p>
-          <XMarkIcon
-            onClick={onClose}
-            className='h-6 w-6 place-self-end cursor-pointer hover:text-gray-300'
-          />
-        </div>
+        <XMarkIcon
+          onClick={onClose}
+          className='h-6 w-6 place-self-end cursor-pointer hover:text-gray-300'
+        />
+        {/* modal title */}
+        <p className='text-2xl'>{title}</p>
         {/* modal content */}
         <div>{children}</div>
       </div>

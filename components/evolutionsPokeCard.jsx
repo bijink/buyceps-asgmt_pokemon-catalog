@@ -5,8 +5,8 @@ import ColorTag from "./colorTag";
 export default function EvolutionsPokeCard({ data, dataIndex, datasLength }) {
   return (
     <div className=''>
-      <div className='flex items-center'>
-        <div className='w-[150px] h-[150px] flex justify-center items-center p-5 bg-white rounded-full border-4 border-gray-800 overflow-hidden'>
+      <div className='flex items-center justify-center'>
+        <div className='w-[80px] h-[80px] sm:w-[150px] sm:h-[150px] flex justify-center items-center p-5 bg-white rounded-full border-4 border-gray-800 overflow-hidden'>
           <Image
             alt={data?.name}
             src={data?.image}
